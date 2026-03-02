@@ -12,7 +12,6 @@ import java.util.Date;
 
 @Entity
 public class News {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -20,7 +19,9 @@ public class News {
     private String link;
     private String description;
     private Date publishedDate;
-public News(){}
+
+    public News(){}
+
     public News( String title, String link, String description, Date publishedDate) {
 
         this.title = title;
@@ -28,6 +29,7 @@ public News(){}
         this.description = description;
         this.publishedDate = publishedDate;
     }
+
     public Long getId() {
         return id;
     }
