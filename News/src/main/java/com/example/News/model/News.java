@@ -1,13 +1,11 @@
 package com.example.News.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.util.Date;
-
+import java.util.HashSet;
+import java.util.Set;
 
 
 @Entity
@@ -16,9 +14,21 @@ public class News {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String title;
+
+    @Column(unique = true, length = 1000)
     private String link;
+    @Column(length = 2000)
     private String description;
     private Date publishedDate;
+    @ManyToOne
+    @JoinColumn(name = "news_group_id")
+    private NewsGroup newsGroup;
+
+    @ManyToMany
+    @JoinTable(name = "news_category",
+            joinColumns = @JoinColumn(name = "news_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
+    private Set<Category> categories = new HashSet<>();
 
     public News(){}
 
@@ -64,5 +74,13 @@ public class News {
 
     public void setPublishedDate(Date publishedDate) {
         this.publishedDate = publishedDate;
+    }
+
+    public void setNewsGroup(NewsGroup newsGroup) {
+        this.newsGroup = newsGroup;
+    }
+
+    public void setCategories(Set<Category> categories) {
+        this.categories = categories;
     }
 }
